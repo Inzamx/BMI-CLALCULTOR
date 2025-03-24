@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="./reset.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+  <title>Body Mass Index Calculator</title>
+</head>
+<style>
+  :root{
+    --color-blue:#8c00ff;
+    --color-gunmetal: #253347;
+    --color-dark-electric-blue: #5E6E85;
+    --color-white: #FFFFFF;
+}
+
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+#Metric:checked {
+    box-shadow: 0px 0px 0px 4px #00eb27;
+    background-color: var(--color-blue);
+    box-shadow: 0px 0px 0px 1px #6d6d6d;
+    font-size: 3em;
+    width: 25px;
+    height: 25px;
+    margin-right: 7px;
+    border: 4px solid #fff;
+    background-clip: border-box;
+    border-radius: 50%;
+    appearance: none;
+   
+}
+#Imperial:checked {
+    box-shadow: 0px 0px 0px 4px #eb0000;
+    background-color: var(--color-blue);
+    box-shadow: 0px 0px 0px 1px #6d6d6d;
+    font-size: 3em;
+    width: 25px;
+    height: 25px;
+    margin-right: 7px;
+    border: 4px solid #fff;
+    background-clip: border-box;
+    border-radius: 50%;
+    appearance: none;
+ 
+}
+
+body{
+    font-family: "Inter", sans-serif;
+    height: 100vh;
+    color: var(--color-gunmetal);
+}
+
+body :before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    background-image: linear-gradient(to bottom right, white, #e7f5fe, #d7e7fe);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-bottom-left-radius: 50px; 
+    border-bottom-right-radius: 50px; 
+    z-index: -1; 
+}
+
+.curved-line-left {
+    display: none;
+}
+
+.curved-line-right{
+    display: none;
+}
+
+.hero > p {
+color: var(--color-gunmetal);
+}
+
+p{
+    font-size:1rem ;
+}
+
+.hero{
+    text-align: center;
+    border-radius: 0 0 2rem 2rem;
+    padding-bottom: 2rem;
+}
+
+.hero > img {
+    margin: auto;
+    padding-top:  2rem;
+}
+
+h1{
+    font-size: 3rem;
+    line-height: 3rem;
+    margin: 2rem;
+    font-weight: 700;
+}
+
+h2{
+    margin: 1rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.hero >p {
+    font-weight: 200;
+    margin: 0 1rem 2rem 1rem;
+}
+
+h3{
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-top: 2rem;  
+}
+/* MAIN */
+
+main{
+    padding-bottom: 5rem;
+}
+
+.main > p {
+    padding: 0rem 2rem;
+}
+
+.main > article{
+    background-image: linear-gradient(to right, hsl(184, 95%, 92%, 0%), hsl(216, 95%, 92%, 25%));
+    padding: 0rem 2rem; 
+}
+
+.formulaire {
+    background-color: var(--color-white);
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 0 1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;  
+}
+
+.container-metric{
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    width: 100%;
+}
+
+.container-metric > div {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.container-metric label {  
+    margin-right: 2rem; 
+}
+
+.height-form , .weight-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+}
+
+.height-form > input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 1rem 0;
+}
+
+
+.weight-form > input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 1rem 0;
+}
+
+.weight-input{
+  position: absolute;
+  right: 1rem;
+  bottom: 1.6rem;
+  color: #8c00ff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.weight-input-two {
+    position: absolute;
+  right: 1rem;
+  bottom: 7rem;
+  color: #8c00ff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.height-input-two {
+    position: absolute;
+    right: 1rem;
+    bottom: 7rem;
+    color: var(--color-blue);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+#HeightTwo, #WeightTwo, .weight-input-two, .height-input-two {
+    display: none;
+}
+
+
+
+.weight-form {
+    position: relative;
+}
+
+
+.container-height-weight {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.height-form{
+    position: relative;
+}
+
+.height-input{
+  position: absolute;
+  right: 1rem;
+  bottom: 1.6rem;
+  color: var(--color-blue);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.total > p{
+    color: var(--color-white);
+}
+
+.total {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    border-radius: 1rem ;
+    padding: 2rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+.total > span{
+    font-size: 1.5rem;
+}
+
+
+input{
+    border-radius: 10px;  
+}
+
+.container-bmi-meaning-article{
+    margin: 0 2rem;
+}
+
+.container-bmi-meaning-text{
+    margin: 0 3rem;
+}
+
+section.main {
+    margin-top: 4rem;
+}
+
+p {
+    color: var(--color-dark-electric-blue);
+    margin: 1.5rem 0;
+    font-size: 0.9rem;   
+}
+
+
+article >img {
+    margin: 1.2rem 0;
+}
+
+.limitations{
+    text-align: center;
+}
+
+.limitations-of-bmi >article >div{
+display: flex;
+gap: 1rem;
+align-items: center;
+
+}
+
+.limitations-of-bmi > article {
+ box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+ border-radius: 20px;
+ padding: 1rem;
+ margin: 1rem 2rem;
+
+}
+.limitations-of-bmi > p {
+    text-align: center;  
+    padding: 0rem 2rem;
+}
+
+
+
+/* MEDIA QUERIES */
+
+/* tablet*/ 
+
+@media screen and (min-width: 768px){
+
+
+.formulaire{
+    margin-left: 3rem;
+    margin-right: 3rem;
+    display: block;
+    }
+.total {
+    border-radius: 1rem 7rem 7rem 1rem ;
+}
+
+.container-height-weight{
+    flex-direction: row;
+    gap: 3rem;
+}
+
+body :before {
+    height: 60%;
+}
+
+.img-meaning{
+    width: 50%;
+}
+
+.container-bmi-meaning{
+    display: flex;
+    align-items: center;
+    margin-right: 3rem;
+    margin-bottom: 3rem;   
+}
+
+ h3 {
+    padding: 0;
+}
+
+.main article {
+  display: flex;
+  gap: 3rem;
+  margin: 0 3rem;
+}
+
+.limitations-of-bmi{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin:  3rem;
+    gap: 1rem; 
+}
+.limitations-of-bmi > h3 {
+    grid-column: 1/5;
+}
+.limitations-of-bmi > p{
+    grid-column: 1/5;
+}
+.limitations-of-bmi > article{
+    grid-column: span 2;
+}
+
+.limitations-of-bmi >article:nth-last-child(1) {
+    grid-column: 2/4;
+}
+
+.limitations-of-bmi > article {
+    margin: 0;
+}
+
+}
+
+
+    /*DESKTOP*/
+    @media screen and (min-width: 1440px){
+
+    .container-hero-form{
+        display: flex;
+        margin-bottom: 10rem;
+    }
+    body :before {
+        width: 70%;
+        height: 65%;
+    }
+
+    .darkmode {
+    background-color: #1a1a1a;
+}
+
+    .hero {
+        text-align: left;
+        width: 50%;
+        margin: 0 7rem; 
+    }
+
+    .hero > h1, .hero >p {
+        margin-left: 0;
+    }
+
+    h1{
+    font-size: 4rem;
+    margin-top:  8rem;
+    line-height: 4rem;
+    }
+
+    .hero > img {
+        display: inline;
+    }
+
+    .formulaire{
+        margin-top: 8rem;
+        margin-right: 7rem;
+    }
+
+    .main{
+        margin: 0rem 7rem;
+    }
+
+    h4{
+        font-size: 1.25rem;
+    }
+
+    #darkmodeicon {
+font-size: 1.5rem;
+color: #8c00ff;
+cursor: pointer;
+}
+
+    .img-meaning{
+        width: 40%;
+    }
+
+    .container-bmi-meaning-text{
+        width: 50%;
+    }
+
+    .container-bmi-meaning-text > h3 {
+        font-size: 3rem;
+    }
+    
+    .container-bmi-meaning-article {
+        display: flex;
+        margin-top: 8rem;
+        justify-content: space-between;  
+    }
+
+    .container-bmi-meaning-article > article {
+        display: block;
+        width: 30%;
+    }
+    
+    .limitations-of-bmi{
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        margin-left: 7rem;
+        gap: 2rem;
+    }
+    
+    .limitations-of-bmi > h3 {
+        grid-column: 1/4;
+        text-align: left;
+        font-size: 3rem;
+       
+    }
+    .limitations-of-bmi > p{
+        grid-column: 1/4;
+        text-align: left;
+        margin-right: 7rem;
+        margin-top: 0;
+        padding: 1rem 0;
+    }
+    .limitations-of-bmi > article{
+        grid-column: span 2;
+    }
+
+    .limitations-of-bmi >article:nth-last-child(5) {
+        grid-column: 4/6;
+    }
+    
+    .limitations-of-bmi >article:nth-last-child(4) {
+        grid-column: 3/5;
+    }
+
+    .limitations-of-bmi >article:nth-last-child(3) {
+        grid-column: 5/7;
+    }
+    
+      .limitations-of-bmi >article:nth-last-child(2) {
+        grid-column: 2/4;
+    }
+
+    .limitations-of-bmi >article:nth-last-child(1) {
+        grid-column: 4/6;
+    }
+    
+    .curved-line-left {
+        display: block;
+        position: absolute; 
+        top: 42rem ;   
+        left: 80rem;
+    }     
+    
+    .curved-line-right{
+        display: block;
+        position: absolute; 
+        top: 120em ;   
+        left: 15rem;
+    }
+
+
+
+    }
+
+    /*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  /*
+    2. Remove default margin
+  */
+  * {
+    margin: 0;
+  }
+  /*
+    Typographic tweaks!
+    3. Add accessible line-height
+    4. Improve text rendering
+  */
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  /*
+    5. Improve media defaults
+  */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  /*
+    6. Remove built-in form typography styles
+  */
+  input, button, textarea, select {
+    font: inherit;
+  }
+  /*
+    7. Avoid text overflows
+  */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  /*
+    8. Create a root stacking context
+  */
+  #root, #__next {
+    isolation: isolate;
+  }
+  
+</style>
+
+<body>
+
+  <div class="container-hero-form">
+    <div class="hero">
+      <img src="/Imgs/logo.svg" alt="">
+      <h1>Body Mass Index Calculator</h1>
+      <p> Better understand your weight in relation to your height using our
+        body mass index (BM) calculator. While BMI is not the sole determinant
+        of a healthy weight, it offers a valuable starting point to evaluate
+        your overall health and well-being.</p>
+    </div>
+    <div class="bx bx-moon" id="darkmodeicon"></div>
+
+    <section class=formulaire>
+
+      <form method="post">
+        <h2>Enter your details below </h2>
+
+        <div class="container-metric">
+          
+          <div>
+          <input type="radio" name="Measure" id="Metric" value="Metric" checked="checked">
+          <label for="Metric">Metric</label>
+        </div>
+
+          <div>
+          <input type="radio" name="Measure" id="Imperial" value="Imperial">
+          <label for="Imperial">Imperial</label>
+          </div>
+          
+        </div>
+
+        <div class="container-height-weight">
+          <div class="height-form">
+            <label for="Height">Height</label>
+            <input type="number" id="Height" placeholder="0" ><span class="height-input">cm</span>
+            
+            <input type="number" id="HeightTwo" placeholder="0" ><span class="height-input-two">in</span>
+          </div>
+
+          <div class="weight-form">
+            <label for="Weight">Weight</label>
+            <input type="number" id="Weight" placeholder="0"><span class="weight-input">kg</span>
+            
+            <input type="number" id="WeightTwo" placeholder="0"><span class="weight-input-two">lbs</span>
+          </div>
+        </div>
+
+        <div class="total">
+          <span class="scoreBMI">Welcome !</span>
+          <p id="Suggest"> Enter your height and weight and you'll see your BMI result here.</p>
+        </div>
+      </form>
+  </div>
+
+  <main>
+    </section>
+
+    <img class="curved-line-left" src="/Imgs/pattern-curved-line-left.svg" alt="curved line">
+
+    <section class="main">
+      <div class="container-bmi-meaning">
+        <img class="img-meaning" src="/Imgs/image-man-eating.webp" alt="A man eating a sushi">
+        <div class=container-bmi-meaning-text>
+          <h3>What your BMI result means</h3>
+          <p id="resultMeaning">A BMI range of 18.5 to 24.9 is considered a 'healthy weight.' Maintaining a
+            healthy weight may lower your chances of experiencing health issues later on,
+            such as obesity and type 2 diabetes. Aim for a nutritious diet with reduced
+            fat and sugar content, incorporating ample fruits and vegetables. Additionally,
+            strive for regular physical activity, ideally about 30 minutes daily for
+            five days a week.</p>
+        </div>
+
+      </div>
+
+      <div class="container-bmi-meaning-article">
+      <article>
+        <img src="/Imgs/icon-eating.svg" alt="eating icon">
+
+        <div>
+          <h4>Healthy eating</h4>
+          <p>Healthy eating promotes weight control, disease prevention, better digestion,
+            immunity, mental clarity, and mood.</p>
+        </div>
+
+      </article>
+
+      <article>
+        <img src="/Imgs/icon-exercise.svg" alt="exercise icon">
+
+        <div>
+          <h4>Regular exercise</h4>
+          <p> Exercise improves fitness, aids weight control, elevates mood, and reduces disease
+            risk, fostering wellness and longevity.</p>
+        </div>
+
+      </article>
+
+
+      <article>
+        <img src="/Imgs/icon-sleep.svg" alt="sleep icon">
+
+        <div>
+          <h4>Adequate sleep</h4>
+          <p>Sleep enhances mental clarity, emotional stability, and physical wellness, promoting
+            overall restoration and rejuvenation.</p>
+        </div>
+
+      </article>
+</div>
+
+    </section>
+
+    <section class=limitations-of-bmi>
+
+      <h3 class="limitations">Limitations of BMI</h3>
+      <p>Although BMI is often a practical indicator of healthy weight, it is not suited for
+        every person. Specific groups should carefully consider their BMI outcomes, and in
+        certain cases, the measurement may not be beneficial to use.</p>
+
+      <article>
+        <div>
+          <img src="/Imgs/icon-gender.svg" alt="gender icon">
+          <h4>Gender</h4>
+        </div>
+        <p>The development and body fat composition of girls and boys vary with age. Consequently,
+          a child's age and gender are considered when evaluating their BMI.</p>
+
+
+      </article>
+
+      <img class="curved-line-right" src="/Imgs/pattern-curved-line-right.svg" alt="curved line">
+
+      <article>
+        <div>
+          <img src="/Imgs/icon-age.svg" alt="age icon">
+          <h4>Age</h4>
+        </div>
+        <p>In aging individuals, increased body fat and muscle loss may cause BMI to underestimate
+          body fat content.</p>
+      </article>
+
+      <article>
+        <div>
+          <img src="/Imgs/icon-muscle.svg" alt="muscle icon">
+          <h4>Muscle</h4>
+        </div>
+        <p>BMI may misclassify muscular individuals as overweight or obese, as it doesn't
+          differentiate muscle from fat.</p>
+      </article>
+
+      <article>
+        <div>
+          <img src="/Imgs/icon-pregnancy.svg" alt="pregnancy icon">
+          <h4>Pregnancy</h4>
+        </div>
+        <p>Expectant mothers experience weight gain due to their growing baby. Maintaining a
+          healthy pre-pregnancy BMI is advisable to minimise health risks for both mother
+          and child.</p>
+      </article>
+
+      <article>
+        <div>
+          <img src="/Imgs/icon-race.svg" alt="race icon">
+          <h4>Race</h4>
+        </div>
+        <p>Certain health concerns may affect individuals of some Black and Asian origins at
+          lower BMIs than others. To learn more, it is advised to discuss this with your
+          GP or practice nurse.</p>
+      </article>
+
+    </section>
+
+  </main>
+
+
+</body>
+
+<script>
+   let darkmodeicon = document.querySelector("#darkmodeicon");
+        darkmodeicon.onclick = () => {
+        darkmodeicon.classList.toggle("bx-sun");
+            document.body.classList.toggle("darkmode");
+        }
+        
+    
+  // TODO récupérer la valeur input height
+  const inputHeightElement = document.querySelector("#Height");
+ // TODO récupérer la valeur input weight
+ const inputWeightElement = document.querySelector("#Weight");
+ // TODO récupérer paragraphe suggestion suivant résultat
+ const suggestElement = document.querySelector("#Suggest");
+ // TODO récupérer paragraphe meaning section
+ const resultMeaning = document.querySelector("#resultMeaning");
+ //TODO récupérer input pour imperial
+ const weightInputTwoElement = document.querySelector(".weight-input-two");
+ const heightInputTwoElement = document.querySelector(".height-input-two");
+ const heightTwoElement = document.querySelector("#HeightTwo");
+ const weightTwoElement =document.querySelector ("#WeightTwo");
+
+ //todo récupérer radio button pour choix Metric/Imperial
+ const radioButtonMetricElement = document.querySelector("#Metric");
+ const radioButtonImperialElement = document.querySelector ("#Imperial");
+ 
+
+
+
+const app = {
+init: function(){
+ //ajout écouteurs d'événements sur les input
+ inputHeightElement.addEventListener('input', app.bmiCalculator);
+ inputWeightElement.addEventListener('input', app.bmiCalculator);
+
+ //ajout ecouteurs d'événement sur radio button
+  radioButtonMetricElement.addEventListener ('click', app.DisplayMeasureElement );
+  radioButtonImperialElement.addEventListener ('click', app.DisplayMeasureElement);
+
+},
+
+DisplayMeasureElement: function () {
+  if (radioButtonImperialElement.checked) {
+   
+      weightInputTwoElement.style.display = "block";
+      heightInputTwoElement.style.display = "block";
+      heightTwoElement.style.display = "block";
+      weightTwoElement.style.display = "block";
+  } else {
+      weightInputTwoElement.style.display = "";
+      heightInputTwoElement.style.display = "";
+      heightTwoElement.style.display = "";
+      weightTwoElement.style.display = "";
+      
+  }
+
+
+},
+
+bmiCalculator: function() {
+//On récupère la valeur de Height et Weight
+const userHeight = parseFloat(inputHeightElement.value);
+const userWeight = parseFloat(inputWeightElement.value);
+//condition que les deux inputs soient bien saisis avant de mofifier le texte du score
+if (userHeight > 0 & userWeight >0) {
+//convertir height en mètre depuis cm
+const convertedBmiResult = userWeight / ((userHeight/100) * (userHeight/100));
+//arrondir le BMI à un chiffre après la virgule
+const bmiResult = Math.round(convertedBmiResult * 10) / 10;
+
+//TODO déterminer la catégorie de BMI
+
+let bmiRange = "";
+
+if (bmiResult <18.5) {
+  bmiRange = "underweight";
+  resultMeaning.innerHTML = ("A BMI below 18.5 indicates being underweight. This may suggest a need to ensure adequate nutrition to support overall health and wellbeing. Consider consulting with a healthcare provider or nutritionist to address nutritional needs.");
+} else if  (bmiResult >= 18.5 && bmiResult <= 24.9) {
+  bmiRange = "normal weight";
+  resultMeaning.innerHTML = ("A BMI range of 18.5 to 24.9 is considered a 'healthy weight.' Maintaining a healthy weight may lower your chances of experiencing health issues later on, such as obesity and type 2 diabetes. Aim for a nutritious diet with reduced fat and sugar content, incorporating ample fruits and vegetables. Additionally, strive for regular physical activity, ideally about 30 minutes daily for five days a week.");
+} else if  (bmiResult > 25 && bmiResult <= 24.9) {
+  bmiRange = "overweight";
+  resultMeaning.innerHTML = ("A BMI between 25 and 29.9 indicates being overweight. This may increase the risk of developing health problems such as heart disease, high blood pressure, and certain cancers. Managing weight through lifestyle changes, including diet modifications and increased physical activity, can help improve overall health.");
+} else if (bmiResult >= 25) {
+  bmiRange = "obesity";
+  resultMeaning.innerHTML = ("Obesity, indicated by a BMI of 30 or higher, is associated with significantly increased health risks. These risks include heart disease, type 2 diabetes, stroke, and joint problems. Effective management often involves comprehensive lifestyle changes, including dietary adjustments, regular physical activity, and potentially medical intervention under healthcare guidance.");
+}
+
+//TODO suivant résultat, envoyer message suivant résultat dans span score + P
+const scoreBmiElement = document.querySelector(".scoreBMI");
+scoreBmiElement.innerHTML =("Your BMIS is ... <br/> " + bmiResult );
+suggestElement.innerHTML = ("Your BMI suggests you're a " + bmiRange);
+
+}  else {
+  // Si l'un des champs est vide ou non valide, réinitialiser le texte
+  const scoreBmiElement = document.querySelector(".scoreBMI");
+  scoreBmiElement.innerHTML = "Enter your Height and Weight";
+  suggestElement.innerHTML = "Enter your height and weight and you'll see your BMI result here.";
+}
+}
+};
+
+
+document.addEventListener('DOMContentLoaded', app.init);
+
+
+
+//todo calculer poids ideal (weight) suivant le bmi result (range en kg);
+</script>
+</html>
